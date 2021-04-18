@@ -18,7 +18,7 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <Label>Animation</Label>
+    <Label>Transition</Label>
     <ComboBox Grid.Row="1" SelectionChanged="OnAnimationChanged" HorizontalAlignment="Stretch" SelectedIndex="1">
       <ComboBoxItem>None</ComboBoxItem>
       <ComboBoxItem>SlideLeft</ComboBoxItem>
@@ -26,15 +26,16 @@
       <ComboBoxItem>FadeIn</ComboBoxItem>
     </ComboBox>
     
-    <Label Grid.Row="2" Margin="0,15,0,0">Duration</Label>
-    <NumericUpDown Grid.Row="3" Minimum="100" Maximum="1500" Value="250" ValueChanged="OnDurationChanged" />
-
-    <Label Grid.Row="4" Margin="0,15,0,0">Easing</Label>
-    <ComboBox Grid.Row="5" SelectionChanged="OnEasingChanged" HorizontalAlignment="Stretch" SelectedIndex="0">
+    <Label Grid.Row="2" Margin="0,15,0,0">Easing</Label>
+    <ComboBox Grid.Row="3" SelectionChanged="OnEasingChanged" HorizontalAlignment="Stretch" SelectedIndex="0">
       <ComboBoxItem>LinearEasing</ComboBoxItem>
       <ComboBoxItem>CubicEaseIn</ComboBoxItem>
       <ComboBoxItem>CubicEaseOut</ComboBoxItem>
+      <ComboBoxItem>CubicEaseInOut</ComboBoxItem>
     </ComboBox>
+
+    <Label Grid.Row="4" Margin="0,15,0,0">Duration</Label>
+    <NumericUpDown Grid.Row="5" Minimum="100" Maximum="1500" Value="250" ValueChanged="OnDurationChanged" />
 
     <Button Grid.Row="7" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="OnPage1Click">Go to Page1</Button>
     <Button Grid.Row="8" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="OnPage2Click">Go to Page2</Button>

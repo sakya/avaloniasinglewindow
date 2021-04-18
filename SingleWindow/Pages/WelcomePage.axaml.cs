@@ -53,6 +53,9 @@ namespace SingleWindow.Pages
                 case 2:
                     this.MainWindow.Transition.Easing = new Avalonia.Animation.Easings.CubicEaseOut();
                     break;
+                case 3:
+                    this.MainWindow.Transition.Easing = new Avalonia.Animation.Easings.CubicEaseInOut();
+                    break;                    
             }
         }        
     }

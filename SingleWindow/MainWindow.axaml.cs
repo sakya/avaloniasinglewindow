@@ -19,6 +19,7 @@ namespace SingleWindow
     {
         Grid m_Container = null;
         List<BasePage> m_PageHistory = new List<BasePage>();
+        bool m_ChangingPage = false;
 
         #region classes
         public class TransitionSettings
@@ -133,17 +134,19 @@ namespace SingleWindow
         
         private async Task<bool> ChangePage(BasePage exiting, BasePage entering, bool back)
         {
+            m_ChangingPage = true;
             entering.Opacity = 0;
             m_Container.Children.Add(entering);
-
             if (exiting == null) {
                 entering.Opacity = 1;
+                m_ChangingPage = false;
                 return true;
             }
 
             if (Transition == null || Transition.Type == TransitionSettings.EnterTransitions.None) {
                 m_Container.Children.Remove(exiting);
                 entering.Opacity = 1;
+                m_ChangingPage = false;
                 return true;
             }
 
@@ -256,8 +259,9 @@ namespace SingleWindow
             exiting.RenderTransform = null;
 
             entering.IsHitTestVisible = true;
-            m_Container.Children.Remove(exiting);            
+            m_Container.Children.Remove(exiting);
 
+            m_ChangingPage = false;
             return true;
         } // ChangePage
 
@@ -273,6 +277,9 @@ namespace SingleWindow
         {
             base.OnKeyDown(e);
 
+            if (m_ChangingPage)
+                return;
+                
             if (CurrentPage != null && CurrentPage.NavigateBackWithKeyboard && e.KeyModifiers == KeyModifiers.None && e.Key == BackKey) {
                 e.Handled = true;
                 await NavigateBack();
