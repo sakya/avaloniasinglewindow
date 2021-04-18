@@ -26,10 +26,12 @@ namespace SingleWindow.Pages
 
         protected MainWindow MainWindow
         {
-            get { return (Application.Current.ApplicationLifetime as Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime).MainWindow as MainWindow; }
+            get { 
+                return (Application.Current.ApplicationLifetime as Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime).MainWindow as MainWindow; 
+            }
         }
 
-        public bool NavigateBackWithKeyboard { get; set; }
+        public bool NavigateBackWithKeyboard { get; set; }       
         public bool NavigateBackOnWindowClose { get; set;}
         public string PageTitle { get; set; }
 
@@ -38,11 +40,20 @@ namespace SingleWindow.Pages
             get { return MainWindow.CanNavigateBack; }
         }
 
+        /// <summary>
+        /// Called before navigating to a new page
+        /// </summary>
+        /// <param name="direction">The navigation direction</param>
+        /// <returns>True to allow the navigation, false to deny it</returns>
         public virtual bool OnNavigatingFrom(NavigationDirection direction)
         {
             return true;
         }
 
+        /// <summary>
+        /// Called after the navigation to this page
+        /// </summary>
+        /// <param name="direction"></param>
         public virtual void OnNavigatedTo(NavigationDirection direction)
         {
             if (!string.IsNullOrEmpty(PageTitle)) {

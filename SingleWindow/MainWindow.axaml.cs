@@ -97,6 +97,11 @@ namespace SingleWindow
         }
 
         #region public operations
+        /// <summary>
+        /// Navigate to a new page
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns>True on success</returns>
         public async Task<bool> NavigateTo(BasePage page)
         {
             var exitingPage = CurrentPage;
@@ -112,6 +117,10 @@ namespace SingleWindow
             return true;
         } // NavigateTo
 
+        /// <summary>
+        /// Navigate to the previous page
+        /// </summary>
+        /// <returns>True on success</returns>
         public async Task<bool> NavigateBack()
         {
             if (m_PageHistory.Count > 0) {
@@ -267,11 +276,16 @@ namespace SingleWindow
 
         private async void OnWindowClosing(object sender, CancelEventArgs args)
         {
+            if (m_ChangingPage) {
+                args.Cancel = true;
+                return;
+            }
+                
             if (CurrentPage?.NavigateBackOnWindowClose == true && CanNavigateBack) {
                 args.Cancel = true;
                 await NavigateBack();
             }
-        }
+        } // OnWindowClosing
 
         private async void OnKeyDown(object sender, KeyEventArgs e)
         {
@@ -279,11 +293,11 @@ namespace SingleWindow
 
             if (m_ChangingPage)
                 return;
-                
+
             if (CurrentPage != null && CurrentPage.NavigateBackWithKeyboard && e.KeyModifiers == KeyModifiers.None && e.Key == BackKey) {
                 e.Handled = true;
                 await NavigateBack();
             }
-        }
+        } // OnKeyDown
     }
 }
