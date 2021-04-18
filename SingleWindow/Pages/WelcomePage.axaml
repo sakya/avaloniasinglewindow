@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="SingleWindow.Pages.WelcomePage">
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <Label>Animation</Label>
+    <ComboBox Grid.Row="1" SelectionChanged="OnAnimationChanged" HorizontalAlignment="Stretch" SelectedIndex="1">
+      <ComboBoxItem>None</ComboBoxItem>
+      <ComboBoxItem>SlideLeft</ComboBoxItem>
+      <ComboBoxItem>SlideUp</ComboBoxItem>
+      <ComboBoxItem>FadeIn</ComboBoxItem>
+    </ComboBox>
+    
+    <Label Grid.Row="2" Margin="0,15,0,0">Duration</Label>
+    <NumericUpDown Grid.Row="3" Minimum="100" Maximum="1500" Value="250" ValueChanged="OnDurationChanged" />
+
+    <Label Grid.Row="4" Margin="0,15,0,0">Easing</Label>
+    <ComboBox Grid.Row="5" SelectionChanged="OnEasingChanged" HorizontalAlignment="Stretch" SelectedIndex="0">
+      <ComboBoxItem>LinearEasing</ComboBoxItem>
+      <ComboBoxItem>CubicEaseIn</ComboBoxItem>
+      <ComboBoxItem>CubicEaseOut</ComboBoxItem>
+    </ComboBox>
+
+    <Button Grid.Row="7" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="OnPage1Click">Go to Page1</Button>
+    <Button Grid.Row="8" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="OnPage2Click">Go to Page2</Button>
+  </Grid>
+</UserControl>
