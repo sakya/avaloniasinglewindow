@@ -19,6 +19,7 @@ namespace SingleWindow
     {
         Grid m_Container = null;
         List<BasePage> m_PageHistory = new List<BasePage>();
+        Dictionary<string, BasePage.PageState> m_PageStates = new Dictionary<string, BasePage.PageState>();
         bool m_ChangingPage = false;
 
         #region classes
@@ -133,14 +134,32 @@ namespace SingleWindow
                 
                 await ChangePage(exitingPage, enteringPage, true);
                 exitingPage?.Dispose();
+                RemovePageState(exitingPage);
 
                 enteringPage.OnNavigatedTo(BasePage.NavigationDirection.Backward);                
                 return true;
             }
             return false;
         } // NavigateBack
+
+        public void SavePageState(BasePage.PageState state) {
+            m_PageStates[state.PageId] = state;
+        } // SavePageState
+
+        public BasePage.PageState LoadPageState(BasePage page)
+        {
+            BasePage.PageState res = null;
+            if (m_PageStates.TryGetValue(page.Id, out res))
+                return res;
+            return null;
+        } // LoadPageState
+
+        public void RemovePageState(BasePage page) {
+            if (page != null)
+                m_PageStates.Remove(page.Id);
+        } // RemovePageState
         #endregion
-        
+
         private async Task<bool> ChangePage(BasePage exiting, BasePage entering, bool back)
         {
             m_ChangingPage = true;

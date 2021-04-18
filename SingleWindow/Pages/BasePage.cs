@@ -16,8 +16,18 @@ namespace SingleWindow.Pages
             Backward
         }
 
+        public abstract class PageState
+        {
+            public PageState(BasePage page) {
+                PageId = page.Id;
+            }
+
+            public string PageId {get; private set; }
+        } // PageState
+
         public BasePage()
         {
+            Id = Guid.NewGuid().ToString("N");
             Margin = new Thickness(15);
 
             NavigateBackWithKeyboard = true;
@@ -31,6 +41,7 @@ namespace SingleWindow.Pages
             }
         }
 
+        public string Id { get; private set; }
         public bool NavigateBackWithKeyboard { get; set; }       
         public bool NavigateBackOnWindowClose { get; set;}
         public string PageTitle { get; set; }
@@ -80,5 +91,14 @@ namespace SingleWindow.Pages
         {
             return await MainWindow.NavigateBack();
         }
+
+        public void SaveState(PageState state) {
+            MainWindow.SavePageState(state);
+        } // SaveState
+
+        public PageState LoadState()
+        {
+            return MainWindow.LoadPageState(this);
+        } // LoadState
     }
 }
