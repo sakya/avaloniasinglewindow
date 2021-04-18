@@ -150,9 +150,6 @@ namespace SingleWindow
             exiting.IsHitTestVisible = false;
             entering.IsHitTestVisible = false;
 
-            exiting.RenderTransform = new TranslateTransform();
-            entering.RenderTransform = new TranslateTransform();
-
             AvaloniaProperty property = null;
             double from = 0.0;
             double to = 0.0;
@@ -161,11 +158,21 @@ namespace SingleWindow
                     property = TranslateTransform.XProperty;
                     from = 0.0;
                     to = this.Bounds.Size.Width;
+
+                    exiting.RenderTransform = new TranslateTransform();
+                    entering.RenderTransform = new TranslateTransform() {
+                        X = to
+                    };
                     break;
                 case TransitionSettings.EnterTransitions.SlideUp:
                     property = TranslateTransform.YProperty;
                     from = 0.0;
                     to = this.Bounds.Size.Height;
+
+                    exiting.RenderTransform = new TranslateTransform();
+                    entering.RenderTransform = new TranslateTransform() {
+                        Y = to
+                    };
                     break;
                 case TransitionSettings.EnterTransitions.FadeIn:
                     property = UserControl.OpacityProperty;
@@ -244,6 +251,9 @@ namespace SingleWindow
                 entering.Opacity = 1;
                 await Task.WhenAll(tasks);
             }
+
+            entering.RenderTransform = null;
+            exiting.RenderTransform = null;
 
             entering.IsHitTestVisible = true;
             m_Container.Children.Remove(exiting);            
