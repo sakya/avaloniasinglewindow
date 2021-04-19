@@ -58,6 +58,7 @@ namespace SingleWindow
         {
             AvaloniaXamlLoader.Load(this);
 
+            // https://github.com/AvaloniaUI/Avalonia/issues/5632
             if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
                 var size = new Size(this.Width, this.Height);
                 var sizeToContent = this.SizeToContent;

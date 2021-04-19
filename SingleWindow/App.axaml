@@ -1,10 +1,6 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="SingleWindow.App">
-    <Application.Resources>
-        <Color x:Key="SystemControlBackgroundAltHighBrush">#1e1e1e</Color>
-    </Application.Resources>
-
     <Application.Styles>
         <FluentTheme Mode="Dark"/>
     </Application.Styles>

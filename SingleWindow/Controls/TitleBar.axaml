@@ -8,8 +8,7 @@
 
   <StackPanel>
     <Grid>
-      <DockPanel Background="{DynamicResource TitleBarBackground}"
-                 IsHitTestVisible="False"></DockPanel>
+      <DockPanel IsHitTestVisible="False"></DockPanel>
 
       <DockPanel>
         <StackPanel Orientation="Horizontal"
