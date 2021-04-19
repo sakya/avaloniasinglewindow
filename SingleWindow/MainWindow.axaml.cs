@@ -18,6 +18,7 @@ namespace SingleWindow
     public class MainWindow : Window
     {
         Grid m_Container = null;
+        Controls.TitleBar m_TitleBar = null;
         List<BasePage> m_PageHistory = new List<BasePage>();
         Dictionary<string, BasePage.PageState> m_PageStates = new Dictionary<string, BasePage.PageState>();
         bool m_ChangingPage = false;
@@ -57,11 +58,27 @@ namespace SingleWindow
         {
             AvaloniaXamlLoader.Load(this);
 
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
+                var size = new Size(this.Width, this.Height);
+                var sizeToContent = this.SizeToContent;
+
+                this.ExtendClientAreaToDecorationsHint = true;
+                this.ExtendClientAreaTitleBarHeightHint = -1;
+                this.ExtendClientAreaChromeHints = Avalonia.Platform.ExtendClientAreaChromeHints.NoChrome;
+                this.TransparencyLevelHint = WindowTransparencyLevel.AcrylicBlur;
+                this.Background = new SolidColorBrush(Colors.Transparent);
+
+                this.Width = size.Width;
+                this.Height = size.Height;
+                this.SizeToContent = sizeToContent;
+            }
+
             WindowTitle = "SingleWindow";
             Transition = new TransitionSettings(TransitionSettings.EnterTransitions.SlideLeft, TimeSpan.FromMilliseconds(250));
             BackKey = Key.Escape;
 
             m_Container = this.FindControl<Grid>("m_Container");
+            m_TitleBar = this.FindControl<Controls.TitleBar>("m_TitleBar");
 
             Closing += OnWindowClosing;
             KeyDown += OnKeyDown;
@@ -146,11 +163,11 @@ namespace SingleWindow
             m_PageStates[state.PageId] = state;
         } // SavePageState
 
-        public BasePage.PageState LoadPageState(BasePage page)
+        public BasePage.PageState LoadPageState<T>(BasePage page) where T : BasePage.PageState
         {
             BasePage.PageState res = null;
             if (m_PageStates.TryGetValue(page.Id, out res))
-                return res;
+                return res as T;
             return null;
         } // LoadPageState
 
@@ -289,6 +306,7 @@ namespace SingleWindow
             entering.IsHitTestVisible = true;
             m_Container.Children.Remove(exiting);
 
+            m_TitleBar.CanGoBack = CanNavigateBack;
             m_ChangingPage = false;
             return true;
         } // ChangePage

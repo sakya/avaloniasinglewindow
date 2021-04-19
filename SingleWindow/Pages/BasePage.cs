@@ -96,9 +96,9 @@ namespace SingleWindow.Pages
             MainWindow.SavePageState(state);
         } // SaveState
 
-        public PageState LoadState()
+        public PageState LoadState<T>() where T: PageState
         {
-            return MainWindow.LoadPageState(this);
+            return MainWindow.LoadPageState<T>(this);
         } // LoadState
     }
 }
