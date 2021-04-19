@@ -122,6 +122,9 @@ namespace SingleWindow
         /// <returns>True on success</returns>
         public async Task<bool> NavigateTo(BasePage page)
         {
+            if (m_ChangingPage)
+                return false;
+
             var exitingPage = CurrentPage;
             if (exitingPage != null) {
                 if (!exitingPage.OnNavigatingFrom(BasePage.NavigationDirection.Forward))
@@ -141,6 +144,9 @@ namespace SingleWindow
         /// <returns>True on success</returns>
         public async Task<bool> NavigateBack()
         {
+            if (m_ChangingPage)
+                return false;
+
             if (m_PageHistory.Count > 0) {
                 var exitingPage = CurrentPage;
                 if (exitingPage?.OnNavigatingFrom(BasePage.NavigationDirection.Backward) == false)

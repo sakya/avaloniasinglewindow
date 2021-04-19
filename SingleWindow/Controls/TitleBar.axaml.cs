@@ -95,10 +95,7 @@ namespace SingleWindow.Controls
             btn = this.FindControl<Button>("m_BackBtn");
             btn.Click += async (e, a) =>
             {
-                var btn = e as Button;
-                btn.IsEnabled = false;
                 await (pw as MainWindow).NavigateBack();
-                btn.IsEnabled = true;
             };
         }
 
