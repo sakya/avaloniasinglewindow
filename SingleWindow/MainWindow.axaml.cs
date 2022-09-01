@@ -58,11 +58,11 @@ namespace SingleWindow
             AvaloniaXamlLoader.Load(this);
 
             if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
-                this.ExtendClientAreaToDecorationsHint = true;
-                this.ExtendClientAreaTitleBarHeightHint = -1;
-                this.ExtendClientAreaChromeHints = Avalonia.Platform.ExtendClientAreaChromeHints.NoChrome;
-                this.TransparencyLevelHint = WindowTransparencyLevel.AcrylicBlur;
-                this.Background = new SolidColorBrush(Colors.Transparent);
+                ExtendClientAreaToDecorationsHint = true;
+                ExtendClientAreaTitleBarHeightHint = -1;
+                ExtendClientAreaChromeHints = Avalonia.Platform.ExtendClientAreaChromeHints.NoChrome;
+                TransparencyLevelHint = WindowTransparencyLevel.AcrylicBlur;
+                Background = new SolidColorBrush(Colors.Transparent);
             }
 
             WindowTitle = "SingleWindow";
@@ -87,17 +87,13 @@ namespace SingleWindow
             get
             {
                 if (_container.Children.Count > 0)
-                    return _container.Children[0] as BasePage;
+                    return _container.Children.FirstOrDefault(c => c is BasePage) as BasePage;
                 return null;
             }
         }
 
-        public bool CanNavigateBack
-        {
-            get {
-                return _pageHistory.Count > 0;
-            }
-        }
+        public bool CanNavigateBack => _pageHistory.Count > 0;
+
         #endregion
 
         protected override async void OnOpened(EventArgs e)
@@ -163,8 +159,7 @@ namespace SingleWindow
 
         public BasePage.PageState LoadPageState<T>(BasePage page) where T : BasePage.PageState
         {
-            BasePage.PageState res;
-            if (_pageStates.TryGetValue(page.Id, out res))
+            if (_pageStates.TryGetValue(page.Id, out var res))
                 return res as T;
             return null;
         } // LoadPageState
@@ -203,7 +198,7 @@ namespace SingleWindow
                 case TransitionSettings.EnterTransitions.SlideLeft:
                     property = TranslateTransform.XProperty;
                     from = 0.0;
-                    to = this.Bounds.Size.Width;
+                    to = Bounds.Size.Width;
 
                     exiting.RenderTransform = new TranslateTransform();
                     entering.RenderTransform = new TranslateTransform() {
@@ -213,7 +208,7 @@ namespace SingleWindow
                 case TransitionSettings.EnterTransitions.SlideUp:
                     property = TranslateTransform.YProperty;
                     from = 0.0;
-                    to = this.Bounds.Size.Height;
+                    to = Bounds.Size.Height;
 
                     exiting.RenderTransform = new TranslateTransform();
                     entering.RenderTransform = new TranslateTransform() {
@@ -291,9 +286,11 @@ namespace SingleWindow
                 await enterAnim.RunAsync(entering, null);
                 entering.Opacity = 1.0;
             } else {
-                List<Task> tasks = new List<Task>();
-                tasks.Add(exitAnim.RunAsync(exiting, null));
-                tasks.Add(enterAnim.RunAsync(entering, null));
+                var tasks = new List<Task>
+                {
+                    exitAnim.RunAsync(exiting, null),
+                    enterAnim.RunAsync(entering, null)
+                };
                 entering.Opacity = 1;
                 await Task.WhenAll(tasks);
             }
