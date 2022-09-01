@@ -20,6 +20,7 @@ bld/
 [Dd]ocs/
 .vs/
 dist/
+.idea/
 
 # Roslyn cache directories
 *.ide/

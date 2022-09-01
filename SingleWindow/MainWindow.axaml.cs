@@ -1,7 +1,6 @@
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
@@ -17,11 +16,11 @@ namespace SingleWindow
 {
     public class MainWindow : Window
     {
-        Grid m_Container = null;
-        Controls.TitleBar m_TitleBar = null;
-        List<BasePage> m_PageHistory = new List<BasePage>();
-        Dictionary<string, BasePage.PageState> m_PageStates = new Dictionary<string, BasePage.PageState>();
-        bool m_ChangingPage = false;
+        private Grid _container;
+        private Controls.TitleBar _titleBar;
+        readonly List<BasePage> _pageHistory = new();
+        readonly Dictionary<string, BasePage.PageState> _pageStates = new();
+        private bool _changingPage;
 
         #region classes
         public class TransitionSettings
@@ -70,8 +69,8 @@ namespace SingleWindow
             Transition = new TransitionSettings(TransitionSettings.EnterTransitions.SlideLeft, TimeSpan.FromMilliseconds(250));
             BackKey = Key.Escape;
 
-            m_Container = this.FindControl<Grid>("m_Container");
-            m_TitleBar = this.FindControl<Controls.TitleBar>("m_TitleBar");
+            _container = this.FindControl<Grid>("Container");
+            _titleBar = this.FindControl<Controls.TitleBar>("TitleBar");
 
             Closing += OnWindowClosing;
             KeyDown += OnKeyDown;
@@ -87,8 +86,8 @@ namespace SingleWindow
         {
             get
             {
-                if (m_Container.Children.Count > 0)
-                    return m_Container.Children[0] as BasePage;
+                if (_container.Children.Count > 0)
+                    return _container.Children[0] as BasePage;
                 return null;
             }
         }
@@ -96,7 +95,7 @@ namespace SingleWindow
         public bool CanNavigateBack
         {
             get {
-                return m_PageHistory.Count > 0;
+                return _pageHistory.Count > 0;
             }
         }
         #endregion
@@ -115,16 +114,16 @@ namespace SingleWindow
         /// <returns>True on success</returns>
         public async Task<bool> NavigateTo(BasePage page)
         {
-            if (m_ChangingPage)
+            if (_changingPage)
                 return false;
 
             var exitingPage = CurrentPage;
             if (exitingPage != null) {
-                if (!exitingPage.OnNavigatingFrom(BasePage.NavigationDirection.Forward))
+                if (!await exitingPage.OnNavigatingFrom(BasePage.NavigationDirection.Forward))
                     return false;
-                m_PageHistory.Add(exitingPage);
+                _pageHistory.Add(exitingPage);
             }
-            
+
             await ChangePage(exitingPage, page, false);
             page.OnNavigatedTo(BasePage.NavigationDirection.Forward);
 
@@ -137,61 +136,61 @@ namespace SingleWindow
         /// <returns>True on success</returns>
         public async Task<bool> NavigateBack()
         {
-            if (m_ChangingPage)
+            if (_changingPage)
                 return false;
 
-            if (m_PageHistory.Count > 0) {
+            if (_pageHistory.Count > 0) {
                 var exitingPage = CurrentPage;
-                if (exitingPage?.OnNavigatingFrom(BasePage.NavigationDirection.Backward) == false)
+                if (exitingPage != null && await exitingPage.OnNavigatingFrom(BasePage.NavigationDirection.Backward) == false)
                     return false;
 
-                var enteringPage = m_PageHistory.Last();
-                m_PageHistory.Remove(enteringPage);
-                
+                var enteringPage = _pageHistory.Last();
+                _pageHistory.Remove(enteringPage);
+
                 await ChangePage(exitingPage, enteringPage, true);
                 exitingPage?.Dispose();
                 RemovePageState(exitingPage);
 
-                enteringPage.OnNavigatedTo(BasePage.NavigationDirection.Backward);                
+                enteringPage.OnNavigatedTo(BasePage.NavigationDirection.Backward);
                 return true;
             }
             return false;
         } // NavigateBack
 
         public void SavePageState(BasePage.PageState state) {
-            m_PageStates[state.PageId] = state;
+            _pageStates[state.PageId] = state;
         } // SavePageState
 
         public BasePage.PageState LoadPageState<T>(BasePage page) where T : BasePage.PageState
         {
-            BasePage.PageState res = null;
-            if (m_PageStates.TryGetValue(page.Id, out res))
+            BasePage.PageState res;
+            if (_pageStates.TryGetValue(page.Id, out res))
                 return res as T;
             return null;
         } // LoadPageState
 
         public void RemovePageState(BasePage page) {
             if (page != null)
-                m_PageStates.Remove(page.Id);
+                _pageStates.Remove(page.Id);
         } // RemovePageState
         #endregion
 
-        private async Task<bool> ChangePage(BasePage exiting, BasePage entering, bool back)
+        private async Task ChangePage(BasePage exiting, BasePage entering, bool back)
         {
-            m_ChangingPage = true;
+            _changingPage = true;
             entering.Opacity = 0;
-            m_Container.Children.Add(entering);
+            _container.Children.Add(entering);
             if (exiting == null) {
                 entering.Opacity = 1;
-                m_ChangingPage = false;
-                return true;
+                _changingPage = false;
+                return;
             }
 
             if (Transition == null || Transition.Type == TransitionSettings.EnterTransitions.None) {
-                m_Container.Children.Remove(exiting);
+                _container.Children.Remove(exiting);
                 entering.Opacity = 1;
-                m_ChangingPage = false;
-                return true;
+                _changingPage = false;
+                return;
             }
 
             exiting.IsHitTestVisible = false;
@@ -285,16 +284,16 @@ namespace SingleWindow
                 Value = from
             });
             enterAnim.Children.Add(kf);
-            
+
             if (Transition.Type == TransitionSettings.EnterTransitions.FadeIn) {
-                await exitAnim.RunAsync(exiting);
+                await exitAnim.RunAsync(exiting, null);
                 exiting.Opacity = 0;
-                await enterAnim.RunAsync(entering);
+                await enterAnim.RunAsync(entering, null);
                 entering.Opacity = 1.0;
             } else {
                 List<Task> tasks = new List<Task>();
-                tasks.Add(exitAnim.RunAsync(exiting));
-                tasks.Add(enterAnim.RunAsync(entering));
+                tasks.Add(exitAnim.RunAsync(exiting, null));
+                tasks.Add(enterAnim.RunAsync(entering, null));
                 entering.Opacity = 1;
                 await Task.WhenAll(tasks);
             }
@@ -303,20 +302,19 @@ namespace SingleWindow
             exiting.RenderTransform = null;
 
             entering.IsHitTestVisible = true;
-            m_Container.Children.Remove(exiting);
+            _container.Children.Remove(exiting);
 
-            m_TitleBar.CanGoBack = CanNavigateBack;
-            m_ChangingPage = false;
-            return true;
+            _titleBar.CanGoBack = CanNavigateBack;
+            _changingPage = false;
         } // ChangePage
 
         private async void OnWindowClosing(object sender, CancelEventArgs args)
         {
-            if (m_ChangingPage) {
+            if (_changingPage) {
                 args.Cancel = true;
                 return;
             }
-                
+
             if (CurrentPage?.NavigateBackOnWindowClose == true && CanNavigateBack) {
                 args.Cancel = true;
                 await NavigateBack();
@@ -327,7 +325,7 @@ namespace SingleWindow
         {
             base.OnKeyDown(e);
 
-            if (m_ChangingPage)
+            if (_changingPage)
                 return;
 
             if (CurrentPage != null && CurrentPage.NavigateBackWithKeyboard && e.KeyModifiers == KeyModifiers.None && e.Key == BackKey) {

@@ -36,13 +36,13 @@ namespace SingleWindow.Pages
 
         protected MainWindow MainWindow
         {
-            get { 
-                return (Application.Current.ApplicationLifetime as Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime).MainWindow as MainWindow; 
+            get {
+                return (Application.Current.ApplicationLifetime as Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime).MainWindow as MainWindow;
             }
         }
 
         public string Id { get; private set; }
-        public bool NavigateBackWithKeyboard { get; set; }       
+        public bool NavigateBackWithKeyboard { get; set; }
         public bool NavigateBackOnWindowClose { get; set;}
         public string PageTitle { get; set; }
 
@@ -56,9 +56,9 @@ namespace SingleWindow.Pages
         /// </summary>
         /// <param name="direction">The navigation direction</param>
         /// <returns>True to allow the navigation, false to deny it</returns>
-        public virtual bool OnNavigatingFrom(NavigationDirection direction)
+        public virtual Task<bool> OnNavigatingFrom(NavigationDirection direction)
         {
-            return true;
+            return Task.FromResult(true);
         }
 
         /// <summary>
