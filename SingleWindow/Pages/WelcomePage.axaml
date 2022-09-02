@@ -16,6 +16,7 @@
       <RowDefinition Height="*" />
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
     <Label>Transition</Label>
@@ -25,7 +26,7 @@
       <ComboBoxItem>SlideUp</ComboBoxItem>
       <ComboBoxItem>FadeIn</ComboBoxItem>
     </ComboBox>
-    
+
     <Label Grid.Row="2" Margin="0,15,0,0">Easing</Label>
     <ComboBox Grid.Row="3" SelectionChanged="OnEasingChanged" HorizontalAlignment="Stretch" SelectedIndex="0">
       <ComboBoxItem>LinearEasing</ComboBoxItem>
@@ -39,5 +40,6 @@
 
     <Button Grid.Row="7" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="OnPage1Click">Go to Page1</Button>
     <Button Grid.Row="8" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="OnPage2Click">Go to Page2</Button>
+    <Button Grid.Row="9" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="OnOpenDialogClick">Open dialog</Button>
   </Grid>
 </UserControl>

@@ -3,6 +3,8 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using SingleWindow.Abstracts;
+using SingleWindow.Dialogs;
 
 namespace SingleWindow.Pages
 {
@@ -30,6 +32,12 @@ namespace SingleWindow.Pages
             await NavigateTo(new Page2());
         }
 
+        private async void OnOpenDialogClick(object sender, RoutedEventArgs e)
+        {
+            var dlg = new MessageDialog();
+            await dlg.Show((Window)this.VisualRoot);
+        }
+
         private void OnAnimationChanged(object sender, SelectionChangedEventArgs args)
         {
             var cmb = sender as ComboBox;
@@ -55,8 +63,8 @@ namespace SingleWindow.Pages
                     break;
                 case 3:
                     this.MainWindow.Transition.Easing = new Avalonia.Animation.Easings.CubicEaseInOut();
-                    break;                    
+                    break;
             }
-        }        
+        }
     }
 }

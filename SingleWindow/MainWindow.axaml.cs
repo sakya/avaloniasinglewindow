@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using SingleWindow.Abstracts;
 
 namespace SingleWindow
 {
@@ -216,7 +217,7 @@ namespace SingleWindow
                     };
                     break;
                 case TransitionSettings.EnterTransitions.FadeIn:
-                    property = UserControl.OpacityProperty;
+                    property = OpacityProperty;
                     from = 1.0;
                     to = 0.0;
                     break;

@@ -1,5 +1,6 @@
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using SingleWindow.Abstracts;
 
 namespace SingleWindow.Pages
 {
