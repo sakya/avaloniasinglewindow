@@ -15,6 +15,12 @@ public abstract class BaseDialog : UserControl, IDisposable
     private bool _closed;
     private object _result;
 
+    protected BaseDialog()
+    {
+        VerticalAlignment = VerticalAlignment.Bottom;
+        HorizontalAlignment = HorizontalAlignment.Stretch;
+    }
+
     public virtual void Dispose()
     {
     }
@@ -49,8 +55,6 @@ public abstract class BaseDialog : UserControl, IDisposable
         };
         container.Children.Add(border);
         var bAnim = AnimateBackdrop(border, 0, 0.8);
-
-        VerticalAlignment = VerticalAlignment.Bottom;
 
         // Animate entrance
         container.Children.Add(this);
