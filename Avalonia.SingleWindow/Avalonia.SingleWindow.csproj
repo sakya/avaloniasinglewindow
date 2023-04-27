@@ -3,11 +3,23 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <PackageId>Avalonia.SingleWindow</PackageId>
-    <Version>1.1.3</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>AvaloniaSingleWindow</PackageId>
     <Authors>Paolo Iommarini</Authors>
     <RepositoryUrl>https://github.com/sakya/avaloniasinglewindow</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/sakya/avaloniasinglewindow</PackageProjectUrl>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/sakya/CmdLineArgsParser</RepositoryUrl>
+    <PackageTags>avalonia</PackageTags>
+    <Description>Classes to develop a single window application</Description>
+    <RespositoryType>git</RespositoryType>
+    <Version>1.1.3</Version>
   </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="../README.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.19" />
