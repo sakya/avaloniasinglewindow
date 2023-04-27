@@ -10,8 +10,8 @@ namespace Avalonia.SingleWindow
 {
     public abstract class MainWindowBase : Window
     {
-        readonly List<BasePage> _pageHistory = new();
-        readonly Dictionary<string, BasePage.PageState> _pageStates = new();
+        private readonly List<BasePage> _pageHistory = new();
+        private readonly Dictionary<string, BasePage.PageState> _pageStates = new();
         private bool _changingPage;
 
         #region classes
