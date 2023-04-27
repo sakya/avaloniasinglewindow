@@ -140,7 +140,6 @@ namespace Avalonia.SingleWindow
         /// </summary>
         protected virtual void PageChanging()
         {
-
         }
 
         /// <summary>
@@ -148,7 +147,6 @@ namespace Avalonia.SingleWindow
         /// </summary>
         protected virtual void PageChanged()
         {
-
         }
 
         private async Task ChangePage(BasePage exiting, BasePage entering, bool back)
@@ -320,6 +318,5 @@ namespace Avalonia.SingleWindow
                 await NavigateBack();
             }
         } // OnKeyDown
-
     }
 }
