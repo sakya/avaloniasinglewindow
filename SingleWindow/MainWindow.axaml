@@ -22,7 +22,7 @@
     </ExperimentalAcrylicBorder>
 
     <DockPanel>
-      <controls:TitleBar Name="TitleBar" DockPanel.Dock="Top"/>
+      <controls:TitleBar Name="TitleBar" DockPanel.Dock="Top" />
       <Grid Name="Container">
       </Grid>
     </DockPanel>

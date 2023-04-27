@@ -135,6 +135,17 @@ namespace Avalonia.SingleWindow
         } // LoadPageState
         #endregion
 
+        /// <summary>
+        /// Called when the page is changing
+        /// </summary>
+        protected virtual void ChangingPage()
+        {
+
+        }
+
+        /// <summary>
+        /// Called when the page changed
+        /// </summary>
         protected virtual void PageChanged()
         {
 
@@ -142,6 +153,7 @@ namespace Avalonia.SingleWindow
 
         private async Task ChangePage(BasePage exiting, BasePage entering, bool back)
         {
+            ChangingPage();
             _changingPage = true;
             entering.Opacity = 0;
             Container.Children.Add(entering);
