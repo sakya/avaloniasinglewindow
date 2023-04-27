@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SingleWindow.Abstracts
+namespace Avalonia.SingleWindow.Abstracts
 {
     public class BasePage : UserControl, IDisposable
     {
@@ -34,10 +34,10 @@ namespace SingleWindow.Abstracts
             NavigateBackOnWindowClose = true;
         }
 
-        protected MainWindow MainWindow
+        protected MainWindowBase MainWindow
         {
             get {
-                return (Application.Current.ApplicationLifetime as Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime).MainWindow as MainWindow;
+                return (Application.Current.ApplicationLifetime as Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime).MainWindow as MainWindowBase;
             }
         }
 

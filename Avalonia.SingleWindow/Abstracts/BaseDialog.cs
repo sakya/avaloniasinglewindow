@@ -4,24 +4,37 @@ using System.Threading.Tasks;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Layout;
 using Avalonia.Media;
 using Avalonia.Styling;
 
-namespace SingleWindow.Abstracts;
+namespace Avalonia.SingleWindow.Abstracts;
 
 public abstract class BaseDialog : UserControl, IDisposable
 {
+    public static BaseDialog CurrentDialog = null;
     private bool _closed;
     private object _result;
 
     protected BaseDialog()
     {
-        VerticalAlignment = VerticalAlignment.Bottom;
+        Animated = true;
+        CloseOnBackdropClick = true;
+        KeyDown += OnKeyDown;
+
+        VerticalAlignment = VerticalAlignment.Stretch;
         HorizontalAlignment = HorizontalAlignment.Stretch;
     }
 
+    public bool Animated { get; set; }
+    public bool CloseOnBackdropClick { get; set; }
+
     public virtual void Dispose()
+    {
+    }
+
+    public virtual void OnKeyDown(object sender, KeyEventArgs e)
     {
     }
 
@@ -30,9 +43,8 @@ public abstract class BaseDialog : UserControl, IDisposable
         return Show<object>(owner);
     }
 
-    public virtual void Opened()
+    protected virtual void Opened()
     {
-
     }
 
     public virtual async Task<T> Show<T>(Window owner)
@@ -44,6 +56,7 @@ public abstract class BaseDialog : UserControl, IDisposable
         if (container == null)
             throw new Exception("Container not found");
 
+        CurrentDialog = this;
         _closed = false;
         owner.Closing += OwnerOnClosing;
 
@@ -53,12 +66,18 @@ public abstract class BaseDialog : UserControl, IDisposable
             Background = new SolidColorBrush(new Color(255, 0, 0, 0)),
             Opacity = 0.8
         };
+        border.Tapped += (s, a) =>
+        {
+            if (CloseOnBackdropClick)
+                Close();
+        };
         container.Children.Add(border);
         var bAnim = AnimateBackdrop(border, 0, 0.8);
 
         // Animate entrance
         container.Children.Add(this);
-        await Animate(container.Bounds.Height, 0.0);
+        if (Animated)
+            await Animate(container.Bounds.Height, 0.0);
         await bAnim;
         Focus();
         Opened();
@@ -68,20 +87,16 @@ public abstract class BaseDialog : UserControl, IDisposable
 
         // Animate exit
         bAnim = AnimateBackdrop(border, 0.8, 0);
-        await Animate(0.0, container.Bounds.Height);
+        if (Animated)
+            await Animate(0.0, container.Bounds.Height);
         await bAnim;
 
         container.Children.Remove(this);
         container.Children.Remove(border);
         owner.Closing -= OwnerOnClosing;
+        CurrentDialog = null;
 
         return (T)_result;
-    }
-
-    private void OwnerOnClosing(object sender, CancelEventArgs e)
-    {
-        e.Cancel = true;
-        Close(null);
     }
 
     public virtual void Close()
@@ -96,6 +111,11 @@ public abstract class BaseDialog : UserControl, IDisposable
     }
 
     #region private operations
+    private void OwnerOnClosing(object sender, CancelEventArgs e)
+    {
+        e.Cancel = true;
+        Close(null);
+    }
 
     private async Task Animate(double from, double to)
     {
@@ -105,7 +125,7 @@ public abstract class BaseDialog : UserControl, IDisposable
             Y = from
         };
 
-        var animation = new Animation()
+        var animation = new Animation.Animation()
         {
             Duration = TimeSpan.FromMilliseconds(250),
             Easing = new LinearEasing()
@@ -143,7 +163,7 @@ public abstract class BaseDialog : UserControl, IDisposable
     private async Task AnimateBackdrop(Border backdrop, double from, double to)
     {
         backdrop.Opacity = from;
-        var animation = new Animation()
+        var animation = new Animation.Animation()
         {
             Duration = TimeSpan.FromMilliseconds(250),
             Easing = new LinearEasing()

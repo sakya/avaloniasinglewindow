@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31205.134
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingleWindow", "SingleWindow\SingleWindow.csproj", "{20A08976-9096-4169-894E-C179A1C08992}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SingleWindow", "SingleWindow\SingleWindow.csproj", "{20A08976-9096-4169-894E-C179A1C08992}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.SingleWindow", "Avalonia.SingleWindow\Avalonia.SingleWindow.csproj", "{2C5593F3-63E4-415A-9944-39EEE1888396}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{20A08976-9096-4169-894E-C179A1C08992}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20A08976-9096-4169-894E-C179A1C08992}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20A08976-9096-4169-894E-C179A1C08992}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C5593F3-63E4-415A-9944-39EEE1888396}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C5593F3-63E4-415A-9944-39EEE1888396}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C5593F3-63E4-415A-9944-39EEE1888396}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C5593F3-63E4-415A-9944-39EEE1888396}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

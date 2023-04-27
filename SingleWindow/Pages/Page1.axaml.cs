@@ -1,6 +1,6 @@
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using SingleWindow.Abstracts;
+using Avalonia.SingleWindow.Abstracts;
 
 namespace SingleWindow.Pages
 {
@@ -16,7 +16,6 @@ namespace SingleWindow.Pages
             AvaloniaXamlLoader.Load(this);
 
             PageTitle = "Page 1";
-            NavigateBackWithKeyboard = true;
         }
 
         private async void OnGoPage2Click(object sender, RoutedEventArgs e)

@@ -1,9 +1,9 @@
 using System;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using SingleWindow.Abstracts;
+using Avalonia.SingleWindow;
+using Avalonia.SingleWindow.Abstracts;
 using SingleWindow.Dialogs;
 
 namespace SingleWindow.Pages
@@ -35,13 +35,13 @@ namespace SingleWindow.Pages
         private async void OnOpenDialogClick(object sender, RoutedEventArgs e)
         {
             var dlg = new MessageDialog();
-            await dlg.Show((Window)this.VisualRoot);
+            await dlg.Show((MainWindowBase)this.VisualRoot);
         }
 
         private void OnAnimationChanged(object sender, SelectionChangedEventArgs args)
         {
-            var cmb = sender as ComboBox;
-            this.MainWindow.Transition.Type = (MainWindow.TransitionSettings.EnterTransitions)cmb.SelectedIndex;
+            if (sender is ComboBox cmb)
+                this.MainWindow.Transition.Type = (MainWindowBase.TransitionSettings.EnterTransitions)cmb.SelectedIndex;
         }
 
         private void OnDurationChanged(object sender, NumericUpDownValueChangedEventArgs args) {
@@ -50,21 +50,15 @@ namespace SingleWindow.Pages
 
         private void OnEasingChanged(object sender, SelectionChangedEventArgs args)
         {
-            var cmb = sender as ComboBox;
-            switch(cmb.SelectedIndex) {
-                case 0:
-                    this.MainWindow.Transition.Easing = new Avalonia.Animation.Easings.LinearEasing();
-                    break;
-                case 1:
-                    this.MainWindow.Transition.Easing = new Avalonia.Animation.Easings.CubicEaseIn();
-                    break;
-                case 2:
-                    this.MainWindow.Transition.Easing = new Avalonia.Animation.Easings.CubicEaseOut();
-                    break;
-                case 3:
-                    this.MainWindow.Transition.Easing = new Avalonia.Animation.Easings.CubicEaseInOut();
-                    break;
-            }
+            if (sender is ComboBox cmb)
+                this.MainWindow.Transition.Easing = cmb.SelectedIndex switch
+                {
+                    0 => new Avalonia.Animation.Easings.LinearEasing(),
+                    1 => new Avalonia.Animation.Easings.CubicEaseIn(),
+                    2 => new Avalonia.Animation.Easings.CubicEaseOut(),
+                    3 => new Avalonia.Animation.Easings.CubicEaseInOut(),
+                    _ => this.MainWindow.Transition.Easing
+                };
         }
     }
 }
