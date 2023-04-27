@@ -11,6 +11,7 @@ namespace Avalonia.SingleWindow.Abstracts;
 
 public abstract class BaseDialog : UserControl, IDisposable
 {
+    public event EventHandler<CancelEventArgs> Closing;
     public static BaseDialog CurrentDialog = null;
     private bool _closed;
     private object _result;
@@ -119,6 +120,13 @@ public abstract class BaseDialog : UserControl, IDisposable
 
     public virtual void Close(object result)
     {
+        if (Closing != null) {
+            var args = new CancelEventArgs();
+            Closing.Invoke(this, args);
+            if (args.Cancel == true)
+                return;
+        }
+
         _result = result;
         _closed = true;
     }
