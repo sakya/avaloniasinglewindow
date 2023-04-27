@@ -1,10 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Avalonia.Controls;
 
 namespace Avalonia.SingleWindow.Abstracts
 {
@@ -37,8 +31,13 @@ namespace Avalonia.SingleWindow.Abstracts
         protected MainWindowBase MainWindow
         {
             get {
-                return (Application.Current.ApplicationLifetime as Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime).MainWindow as MainWindowBase;
-            }
+                if (Application.Current != null) {
+                    return (Application.Current.ApplicationLifetime as
+                            Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime)
+                        ?.MainWindow as MainWindowBase;
+                }
+
+                return null;            }
         }
 
         public string Id { get; private set; }

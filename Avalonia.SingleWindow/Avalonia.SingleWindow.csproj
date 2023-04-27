@@ -3,6 +3,10 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
+    <PackageId>Avalonia.SingleWindow</PackageId>
+    <Version>1.1.1</Version>
+    <Authors>Paolo Iommarini</Authors>
+    <RepositoryUrl>https://github.com/sakya/avaloniasinglewindow</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

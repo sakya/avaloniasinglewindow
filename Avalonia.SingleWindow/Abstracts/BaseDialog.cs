@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Controls;
@@ -25,10 +23,25 @@ public abstract class BaseDialog : UserControl, IDisposable
 
         VerticalAlignment = VerticalAlignment.Stretch;
         HorizontalAlignment = HorizontalAlignment.Stretch;
+        Background = new SolidColorBrush(Colors.Transparent);
     }
 
     public bool Animated { get; set; }
     public bool CloseOnBackdropClick { get; set; }
+
+    protected MainWindowBase MainWindow
+    {
+        get
+        {
+            if (Application.Current != null) {
+                return (Application.Current.ApplicationLifetime as
+                        Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime)
+                    ?.MainWindow as MainWindowBase;
+            }
+
+            return null;
+        }
+    }
 
     public virtual void Dispose()
     {
@@ -52,7 +65,7 @@ public abstract class BaseDialog : UserControl, IDisposable
         if (owner == null)
             throw new ArgumentNullException(nameof(owner));
 
-        var container = owner.FindControl<Grid>("Container");
+        var container = MainWindow.Container;
         if (container == null)
             throw new Exception("Container not found");
 
