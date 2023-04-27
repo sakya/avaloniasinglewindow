@@ -78,7 +78,6 @@ namespace Avalonia.SingleWindow.Abstracts
 
         public virtual void Dispose()
         {
-
         }
 
         public async Task<bool> NavigateTo(BasePage page)
