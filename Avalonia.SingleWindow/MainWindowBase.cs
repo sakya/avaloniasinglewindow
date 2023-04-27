@@ -138,7 +138,7 @@ namespace Avalonia.SingleWindow
         /// <summary>
         /// Called when the page is changing
         /// </summary>
-        protected virtual void ChangingPage()
+        protected virtual void PageChanging()
         {
 
         }
@@ -153,7 +153,7 @@ namespace Avalonia.SingleWindow
 
         private async Task ChangePage(BasePage exiting, BasePage entering, bool back)
         {
-            ChangingPage();
+            PageChanging();
             _changingPage = true;
             entering.Opacity = 0;
             Container.Children.Add(entering);
