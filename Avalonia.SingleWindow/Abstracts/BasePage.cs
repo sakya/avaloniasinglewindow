@@ -30,9 +30,21 @@ namespace Avalonia.SingleWindow.Abstracts
 
         protected MainWindowBase MainWindow => MainWindowBase.Instance;
 
+        /// <summary>
+        /// The unique Id of the page
+        /// </summary>
         public string Id { get; private set; }
+        /// <summary>
+        /// Defines if the page should navigate back when <see cref="MainWindowBase.BackKey"/> is pressed (default: true)
+        /// </summary>
         public bool NavigateBackWithKeyboard { get; set; }
+        /// <summary>
+        /// Defines if the page should navigate back when the close window button is clicked (default: true)
+        /// </summary>
         public bool NavigateBackOnWindowClose { get; set;}
+        /// <summary>
+        /// The page title. Page title is postponed to the <see cref="MainWindowBase.WindowTitle"/>
+        /// </summary>
         public string PageTitle { get; set; }
 
         public bool CanNavigateBack

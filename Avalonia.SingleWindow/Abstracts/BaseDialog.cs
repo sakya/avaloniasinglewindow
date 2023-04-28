@@ -27,7 +27,13 @@ public abstract class BaseDialog : UserControl, IDisposable
         Background = new SolidColorBrush(Colors.Transparent);
     }
 
+    /// <summary>
+    /// Defines if the dialog is animated (default: true)
+    /// </summary>
     public bool Animated { get; set; }
+    /// <summary>
+    /// Defines if the dialog is closed if the user clicks on the backdrop (default: true)
+    /// </summary>
     public bool CloseOnBackdropClick { get; set; }
 
     protected MainWindowBase MainWindow => MainWindowBase.Instance;

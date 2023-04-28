@@ -39,12 +39,26 @@ namespace Avalonia.SingleWindow
         #endregion
 
         #region public properties
+        /// <summary>
+        /// The <see cref="MainWindowBase"/> instance
+        /// </summary>
         public static MainWindowBase Instance { get; private set; }
+        /// <summary>
+        /// Defines the transition used when navigating to a new page
+        /// </summary>
         public TransitionSettings Transition { get; set; }
+        /// <summary>
+        ///  When this key is pressed the current page navigates back (default: Escape)
+        /// </summary>
         public Key BackKey { get; set; }
-
+        /// <summary>
+        /// The window title
+        /// </summary>
         public string WindowTitle { get; set; }
 
+        /// <summary>
+        /// The current <see cref="BasePage"/>
+        /// </summary>
         public BasePage CurrentPage
         {
             get
@@ -55,6 +69,9 @@ namespace Avalonia.SingleWindow
             }
         }
 
+        /// <summary>
+        /// Returns if the current page can navigate back
+        /// </summary>
         public bool CanNavigateBack => _pageHistory.Count > 0;
         #endregion
 
@@ -129,11 +146,19 @@ namespace Avalonia.SingleWindow
             return false;
         } // NavigateBack
 
+        /// <summary>
+        /// Save the current page state
+        /// </summary>
+        /// <param name="state">The page state</param>
         public void SavePageState(BasePage.PageState state)
         {
             _pageStates[state.PageId] = state;
         } // SavePageState
 
+        /// <summary>
+        /// Load the page state of the given <see cref="BasePage"/>
+        /// </summary>
+        /// <param name="page">The page</param>
         public BasePage.PageState LoadPageState<T>(BasePage page) where T : BasePage.PageState
         {
             if (_pageStates.TryGetValue(page.Id, out var res))
@@ -156,6 +181,7 @@ namespace Avalonia.SingleWindow
         {
         }
 
+        #region private operations
         private async Task ChangePage(BasePage exiting, BasePage entering, bool back)
         {
             PageChanging();
@@ -325,5 +351,6 @@ namespace Avalonia.SingleWindow
                 await NavigateBack();
             }
         } // OnKeyDown
+        #endregion
     }
 }
