@@ -46,27 +46,37 @@ public abstract class BaseDialog : UserControl, IDisposable
     {
     }
 
-    public virtual Task Show(Window owner)
+    /// <summary>
+    /// Show the <see cref="BaseDialog"/>
+    /// </summary>
+    /// <returns></returns>
+    public virtual Task Show()
     {
-        return Show<object>(owner);
+        return Show<object>();
     }
 
+    /// <summary>
+    /// Called when the <see cref="BaseDialog"/> is opened
+    /// </summary>
     protected virtual void Opened()
     {
     }
 
-    public virtual async Task<T> Show<T>(Window owner)
+    /// <summary>
+    /// Show the <see cref="BaseDialog"/> with a return type
+    /// </summary>
+    /// <typeparam name="T">The return type</typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public virtual async Task<T> Show<T>()
     {
-        if (owner == null)
-            throw new ArgumentNullException(nameof(owner));
-
         var container = MainWindow.Container;
         if (container == null)
             throw new Exception("Container not found");
 
         CurrentDialog = this;
         _closed = false;
-        owner.Closing += OwnerOnClosing;
+        MainWindowBase.Instance.Closing += OwnerOnClosing;
 
         // Create the backdrop
         var backdrop = new Border()
@@ -101,17 +111,23 @@ public abstract class BaseDialog : UserControl, IDisposable
 
         container.Children.Remove(this);
         container.Children.Remove(backdrop);
-        owner.Closing -= OwnerOnClosing;
+        MainWindowBase.Instance.Closing -= OwnerOnClosing;
         CurrentDialog = null;
 
         return (T)_result;
     }
 
+    /// <summary>
+    /// Close the <see cref="BaseDialog"/>
+    /// </summary>
     public virtual void Close()
     {
         Close(null);
     }
 
+    /// <summary>
+    /// Close the <see cref="BaseDialog"/> returning the given value
+    /// </summary>
     public virtual void Close(object result)
     {
         if (Closing != null) {

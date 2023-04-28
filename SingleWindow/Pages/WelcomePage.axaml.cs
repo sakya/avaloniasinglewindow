@@ -35,7 +35,7 @@ namespace SingleWindow.Pages
         private async void OnOpenDialogClick(object sender, RoutedEventArgs e)
         {
             var dlg = new MessageDialog();
-            await dlg.Show((MainWindowBase)this.VisualRoot);
+            await dlg.Show();
         }
 
         private void OnAnimationChanged(object sender, SelectionChangedEventArgs args)
