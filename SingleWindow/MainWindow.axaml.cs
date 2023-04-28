@@ -42,7 +42,6 @@ namespace SingleWindow
         protected override async void OnOpened(EventArgs e)
         {
             base.OnOpened(e);
-            await Task.Delay(10);
             await NavigateTo(new WelcomePage());
         }
 

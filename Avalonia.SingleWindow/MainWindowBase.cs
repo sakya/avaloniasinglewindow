@@ -87,6 +87,8 @@ namespace Avalonia.SingleWindow
             if (_changingPage)
                 return false;
 
+            // This delay lets the window draw for the first page
+            await Task.Delay(1);
             var exitingPage = CurrentPage;
             if (exitingPage != null) {
                 if (!await exitingPage.OnNavigatingFrom(BasePage.NavigationDirection.Forward))
