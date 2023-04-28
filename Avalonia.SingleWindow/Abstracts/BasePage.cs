@@ -28,17 +28,7 @@ namespace Avalonia.SingleWindow.Abstracts
             NavigateBackOnWindowClose = true;
         }
 
-        protected MainWindowBase MainWindow
-        {
-            get {
-                if (Application.Current != null) {
-                    return (Application.Current.ApplicationLifetime as
-                            Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime)
-                        ?.MainWindow as MainWindowBase;
-                }
-
-                return null;            }
-        }
+        protected MainWindowBase MainWindow => MainWindowBase.Instance;
 
         public string Id { get; private set; }
         public bool NavigateBackWithKeyboard { get; set; }

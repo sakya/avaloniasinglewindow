@@ -39,6 +39,7 @@ namespace Avalonia.SingleWindow
         #endregion
 
         #region public properties
+        public static MainWindowBase Instance { get; private set; }
         public TransitionSettings Transition { get; set; }
         public Key BackKey { get; set; }
 
@@ -59,6 +60,10 @@ namespace Avalonia.SingleWindow
 
         protected MainWindowBase()
         {
+            if (Instance != null)
+                throw new Exception("Only one instance of MainWindowBase is allowed");
+
+            Instance = this;
             Closing += OnWindowClosing;
             KeyDown += OnKeyDown;
 

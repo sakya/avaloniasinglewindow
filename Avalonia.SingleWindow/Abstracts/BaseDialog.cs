@@ -30,19 +30,7 @@ public abstract class BaseDialog : UserControl, IDisposable
     public bool Animated { get; set; }
     public bool CloseOnBackdropClick { get; set; }
 
-    protected MainWindowBase MainWindow
-    {
-        get
-        {
-            if (Application.Current != null) {
-                return (Application.Current.ApplicationLifetime as
-                        Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime)
-                    ?.MainWindow as MainWindowBase;
-            }
-
-            return null;
-        }
-    }
+    protected MainWindowBase MainWindow => MainWindowBase.Instance;
 
     public virtual void Dispose()
     {
