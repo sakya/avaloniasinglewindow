@@ -12,7 +12,7 @@ namespace Avalonia.SingleWindow.Abstracts;
 public abstract class BaseDialog : UserControl, IDisposable
 {
     public event EventHandler<CancelEventArgs> Closing;
-    public static BaseDialog CurrentDialog = null;
+    public static BaseDialog CurrentDialog;
     private bool _closed;
     private object _result;
 
@@ -63,18 +63,18 @@ public abstract class BaseDialog : UserControl, IDisposable
         owner.Closing += OwnerOnClosing;
 
         // Create the backdrop
-        var border = new Border()
+        var backdrop = new Border()
         {
             Background = new SolidColorBrush(new Color(255, 0, 0, 0)),
             Opacity = 0.8
         };
-        border.Tapped += (s, a) =>
+        backdrop.Tapped += (s, a) =>
         {
             if (CloseOnBackdropClick)
                 Close();
         };
-        container.Children.Add(border);
-        var bAnim = AnimateBackdrop(border, 0, 0.8);
+        container.Children.Add(backdrop);
+        var bAnim = AnimateBackdrop(backdrop, 0, 0.8);
 
         // Animate entrance
         container.Children.Add(this);
@@ -88,13 +88,13 @@ public abstract class BaseDialog : UserControl, IDisposable
             await Task.Delay(100);
 
         // Animate exit
-        bAnim = AnimateBackdrop(border, 0.8, 0);
+        bAnim = AnimateBackdrop(backdrop, 0.8, 0);
         if (Animated)
             await Animate(0.0, container.Bounds.Height);
         await bAnim;
 
         container.Children.Remove(this);
-        container.Children.Remove(border);
+        container.Children.Remove(backdrop);
         owner.Closing -= OwnerOnClosing;
         CurrentDialog = null;
 
