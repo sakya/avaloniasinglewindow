@@ -10,6 +10,7 @@ namespace Avalonia.SingleWindow
 {
     public abstract class MainWindowBase : Window
     {
+        private string _windowTitle;
         private readonly List<BasePage> _pageHistory = new();
         private readonly Dictionary<string, BasePage.PageState> _pageStates = new();
         private bool _changingPage;
@@ -51,10 +52,20 @@ namespace Avalonia.SingleWindow
         ///  When this key is pressed the current page navigates back (default: Escape)
         /// </summary>
         public Key BackKey { get; set; }
+
         /// <summary>
         /// The window title
         /// </summary>
-        public string WindowTitle { get; set; }
+        public string WindowTitle
+        {
+            get { return _windowTitle;}
+            set
+            {
+                _windowTitle = value;
+                if (string.IsNullOrEmpty(Title))
+                    Title = WindowTitle;
+            }
+        }
 
         /// <summary>
         /// The current <see cref="BasePage"/>
