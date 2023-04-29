@@ -7,8 +7,7 @@
         Width="600" Height="350"
         MinWidth="300" MinHeight="300"
         WindowStartupLocation="CenterScreen"
-        x:Class="SingleWindow.MainWindow"
-        Title="SingleWindow">
+        x:Class="SingleWindow.MainWindow">
 
   <Panel>
     <ExperimentalAcrylicBorder IsHitTestVisible="False">

@@ -62,8 +62,7 @@ namespace Avalonia.SingleWindow
             set
             {
                 _windowTitle = value;
-                if (string.IsNullOrEmpty(Title))
-                    Title = WindowTitle;
+                Title = WindowTitle;
             }
         }
 
