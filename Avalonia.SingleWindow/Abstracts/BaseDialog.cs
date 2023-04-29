@@ -72,7 +72,7 @@ public abstract class BaseDialog : UserControl, IDisposable
     {
         var container = MainWindow.Container;
         if (container == null)
-            throw new Exception("Container not found");
+            throw new Exception("MainWindow.Container is null");
 
         CurrentDialog = this;
         _closed = false;
@@ -133,7 +133,7 @@ public abstract class BaseDialog : UserControl, IDisposable
         if (Closing != null) {
             var args = new CancelEventArgs();
             Closing.Invoke(this, args);
-            if (args.Cancel == true)
+            if (args.Cancel)
                 return;
         }
 

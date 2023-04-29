@@ -12,14 +12,14 @@ namespace Avalonia.SingleWindow.Abstracts
 
         public abstract class PageState
         {
-            public PageState(BasePage page) {
+            protected PageState(BasePage page) {
                 PageId = page.Id;
             }
 
             public string PageId {get; private set; }
         } // PageState
 
-        public BasePage()
+        protected BasePage()
         {
             Id = Guid.NewGuid().ToString("N");
             Margin = new Thickness(15);
@@ -47,10 +47,7 @@ namespace Avalonia.SingleWindow.Abstracts
         /// </summary>
         public string PageTitle { get; set; }
 
-        public bool CanNavigateBack
-        {
-            get { return MainWindow.CanNavigateBack; }
-        }
+        public bool CanNavigateBack => MainWindow.CanNavigateBack;
 
         /// <summary>
         /// Called before navigating to a new page
@@ -69,10 +66,7 @@ namespace Avalonia.SingleWindow.Abstracts
         public virtual void OnNavigatedTo(NavigationDirection direction)
         {
             if (!string.IsNullOrEmpty(PageTitle)) {
-                if (!string.IsNullOrEmpty(MainWindow.WindowTitle))
-                    MainWindow.Title = $"{MainWindow.WindowTitle} - {PageTitle}";
-                else
-                    MainWindow.Title = PageTitle;
+                MainWindow.Title = !string.IsNullOrEmpty(MainWindow.WindowTitle) ? $"{MainWindow.WindowTitle} - {PageTitle}" : PageTitle;
             } else {
                 MainWindow.Title = MainWindow.WindowTitle;
             }

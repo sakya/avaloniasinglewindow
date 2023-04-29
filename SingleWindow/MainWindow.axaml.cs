@@ -4,7 +4,6 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using SingleWindow.Pages;
 using System;
-using System.Threading.Tasks;
 using Avalonia.SingleWindow;
 
 namespace SingleWindow

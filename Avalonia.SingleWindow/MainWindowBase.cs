@@ -58,7 +58,7 @@ namespace Avalonia.SingleWindow
         /// </summary>
         public string WindowTitle
         {
-            get { return _windowTitle;}
+            get => _windowTitle;
             set
             {
                 _windowTitle = value;
@@ -356,7 +356,7 @@ namespace Avalonia.SingleWindow
             if (_changingPage)
                 return;
 
-            if (CurrentPage != null && CurrentPage.NavigateBackWithKeyboard && e.KeyModifiers == KeyModifiers.None && e.Key == BackKey) {
+            if (CurrentPage is { NavigateBackWithKeyboard: true } && e.KeyModifiers == KeyModifiers.None && e.Key == BackKey) {
                 e.Handled = true;
                 await NavigateBack();
             }
