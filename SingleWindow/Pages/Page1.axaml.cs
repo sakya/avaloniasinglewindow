@@ -4,7 +4,7 @@ using Avalonia.SingleWindow.Abstracts;
 
 namespace SingleWindow.Pages
 {
-    public class Page1 : BasePage
+    public partial class Page1 : BasePage
     {
         public Page1()
         {

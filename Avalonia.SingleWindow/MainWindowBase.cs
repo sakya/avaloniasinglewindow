@@ -251,7 +251,8 @@ namespace Avalonia.SingleWindow
             var exitAnim = new Animation.Animation()
             {
                 Duration = Transition.Duration,
-                Easing = Transition.Easing
+                Easing = Transition.Easing,
+                FillMode = FillMode.Forward
             };
 
             var kf = new KeyFrame()
@@ -280,7 +281,8 @@ namespace Avalonia.SingleWindow
             var enterAnim = new Animation.Animation()
             {
                 Duration = Transition.Duration,
-                Easing = Transition.Easing
+                Easing = Transition.Easing,
+                FillMode = FillMode.Forward
             };
 
             kf = new KeyFrame()
@@ -306,17 +308,17 @@ namespace Avalonia.SingleWindow
             enterAnim.Children.Add(kf);
 
             if (Transition.Type == TransitionSettings.EnterTransitions.FadeIn) {
-                await exitAnim.RunAsync(exiting, null);
+                await exitAnim.RunAsync(exiting, CancellationToken.None);
                 exiting.Opacity = 0;
-                await enterAnim.RunAsync(entering, null);
+                await enterAnim.RunAsync(entering, CancellationToken.None);
                 entering.Opacity = 1.0;
             } else {
                 var tasks = new List<Task>
                 {
-                    exitAnim.RunAsync(exiting, null),
-                    enterAnim.RunAsync(entering, null)
+                    exitAnim.RunAsync(exiting, CancellationToken.None),
+                    enterAnim.RunAsync(entering, CancellationToken.None)
                 };
-                entering.Opacity = 1;
+                entering.Opacity = 1.0;
                 await Task.WhenAll(tasks);
             }
 
