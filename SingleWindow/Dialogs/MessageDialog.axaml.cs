@@ -1,6 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Input;
+﻿using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Markup.Xaml;
@@ -15,7 +13,6 @@ public partial class MessageDialog : BaseDialog
         InitializeComponent();
 
         VerticalAlignment = VerticalAlignment.Bottom;
-        KeyDown += OnKeyDown;
     }
 
     private void InitializeComponent()
@@ -23,7 +20,7 @@ public partial class MessageDialog : BaseDialog
         AvaloniaXamlLoader.Load(this);
     }
 
-    public void OnKeyDown(object sender, KeyEventArgs e)
+    public override void OnKeyDown(object sender, KeyEventArgs e)
     {
         if (e.Key == Key.Escape || e.Key == Key.Enter) {
             e.Handled = true;

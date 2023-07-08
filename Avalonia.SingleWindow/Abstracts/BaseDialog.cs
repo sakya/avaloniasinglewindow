@@ -18,6 +18,7 @@ public abstract class BaseDialog : UserControl, IDisposable
 
     protected BaseDialog()
     {
+        Focusable = true;
         Animated = true;
         CloseOnBackdropClick = true;
         KeyDown += OnKeyDown;
