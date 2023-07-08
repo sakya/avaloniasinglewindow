@@ -34,7 +34,7 @@ namespace SingleWindow
 
             WindowTitle = "SingleWindow";
 
-            Container = this.FindControl<Grid>("ContainerGrid");;
+            Container = this.FindControl<Grid>("ContainerGrid");
             _titleBar = this.FindControl<Controls.TitleBar>("TitleBar");
         }
 
