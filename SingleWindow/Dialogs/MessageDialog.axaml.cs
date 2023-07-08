@@ -15,6 +15,7 @@ public partial class MessageDialog : BaseDialog
         InitializeComponent();
 
         VerticalAlignment = VerticalAlignment.Bottom;
+        KeyDown += OnKeyDown;
     }
 
     private void InitializeComponent()
@@ -22,7 +23,7 @@ public partial class MessageDialog : BaseDialog
         AvaloniaXamlLoader.Load(this);
     }
 
-    public override void OnKeyDown(object sender, KeyEventArgs e)
+    public void OnKeyDown(object sender, KeyEventArgs e)
     {
         if (e.Key == Key.Escape || e.Key == Key.Enter) {
             e.Handled = true;

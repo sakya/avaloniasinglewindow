@@ -8,7 +8,7 @@ using Avalonia.SingleWindow;
 
 namespace SingleWindow
 {
-    public class MainWindow : MainWindowBase
+    public partial class MainWindow : MainWindowBase
     {
         private Controls.TitleBar _titleBar;
 
@@ -28,13 +28,13 @@ namespace SingleWindow
                 ExtendClientAreaToDecorationsHint = true;
                 ExtendClientAreaTitleBarHeightHint = -1;
                 ExtendClientAreaChromeHints = Avalonia.Platform.ExtendClientAreaChromeHints.NoChrome;
-                TransparencyLevelHint = WindowTransparencyLevel.AcrylicBlur;
+                //TransparencyLevelHint = WindowTransparencyLevel.AcrylicBlur;
                 Background = new SolidColorBrush(Colors.Transparent);
             }
 
             WindowTitle = "SingleWindow";
 
-            Container = this.FindControl<Panel>("Container");
+            Container = this.FindControl<Grid>("ContainerGrid");;
             _titleBar = this.FindControl<Controls.TitleBar>("TitleBar");
         }
 

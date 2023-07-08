@@ -8,7 +8,7 @@ using SingleWindow.Dialogs;
 
 namespace SingleWindow.Pages
 {
-    public class WelcomePage : BasePage
+    public partial class WelcomePage : BasePage
     {
         public WelcomePage()
         {
@@ -45,7 +45,7 @@ namespace SingleWindow.Pages
         }
 
         private void OnDurationChanged(object sender, NumericUpDownValueChangedEventArgs args) {
-            this.MainWindow.Transition.Duration = TimeSpan.FromMilliseconds(args.NewValue);
+            this.MainWindow.Transition.Duration = TimeSpan.FromMilliseconds((double)args.NewValue);
         }
 
         private void OnEasingChanged(object sender, SelectionChangedEventArgs args)

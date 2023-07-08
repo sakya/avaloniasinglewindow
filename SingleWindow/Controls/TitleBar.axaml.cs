@@ -6,7 +6,7 @@ using System;
 
 namespace SingleWindow.Controls
 {
-    public class TitleBar : UserControl
+    public partial class TitleBar : UserControl
     {
         bool _canGoBack;
 

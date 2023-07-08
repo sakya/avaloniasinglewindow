@@ -5,11 +5,12 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.19" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.19" />
-    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.19" />
-    <PackageReference Include="Projektanker.Icons.Avalonia" Version="5.13.0" />
-    <PackageReference Include="Projektanker.Icons.Avalonia.FontAwesome" Version="5.13.0" />
+    <PackageReference Include="Avalonia" Version="11.0.0" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.0" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.0.0" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0" />
+    <PackageReference Include="Projektanker.Icons.Avalonia" Version="6.6.0-rc1.1" />
+    <PackageReference Include="Projektanker.Icons.Avalonia.FontAwesome" Version="6.6.0-rc1.1" />
    </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />

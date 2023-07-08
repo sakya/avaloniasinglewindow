@@ -6,7 +6,7 @@ using Avalonia.SingleWindow.Abstracts;
 
 namespace SingleWindow.Pages
 {
-    public class Page2 : BasePage
+    public partial class Page2 : BasePage
     {
         public Page2()
         {

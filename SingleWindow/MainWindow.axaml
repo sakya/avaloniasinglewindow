@@ -22,7 +22,7 @@
 
     <DockPanel>
       <controls:TitleBar Name="TitleBar" DockPanel.Dock="Top" />
-      <Grid Name="Container">
+      <Grid Name="ContainerGrid">
       </Grid>
     </DockPanel>
   </Panel>

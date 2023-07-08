@@ -159,7 +159,8 @@ public abstract class BaseDialog : UserControl, IDisposable
         var animation = new Animation.Animation()
         {
             Duration = TimeSpan.FromMilliseconds(250),
-            Easing = new LinearEasing()
+            Easing = new LinearEasing(),
+            FillMode = FillMode.Forward
         };
 
         var kf = new KeyFrame()
@@ -184,7 +185,7 @@ public abstract class BaseDialog : UserControl, IDisposable
         });
         animation.Children.Add(kf);
 
-        await animation.RunAsync(this, null);
+        await animation.RunAsync(this, CancellationToken.None);
         RenderTransform = new TranslateTransform() {
             Y = to
         };
@@ -197,7 +198,8 @@ public abstract class BaseDialog : UserControl, IDisposable
         var animation = new Animation.Animation()
         {
             Duration = TimeSpan.FromMilliseconds(250),
-            Easing = new LinearEasing()
+            Easing = new LinearEasing(),
+            FillMode = FillMode.Forward
         };
 
         var kf = new KeyFrame()
@@ -222,7 +224,7 @@ public abstract class BaseDialog : UserControl, IDisposable
         });
         animation.Children.Add(kf);
 
-        await animation.RunAsync(backdrop, null);
+        await animation.RunAsync(backdrop, CancellationToken.None);
         backdrop.Opacity = to;
     }
     #endregion
