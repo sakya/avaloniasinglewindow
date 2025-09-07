@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Markup.Xaml;
 using System;
+using Avalonia.Reactive;
 
 namespace SingleWindow.Controls
 {
@@ -49,13 +50,10 @@ namespace SingleWindow.Controls
             if (pw != null) {
                 SetTitle(pw.Title);
                 var title = pw.GetObservable(Window.TitleProperty);
-                title.Subscribe(value =>
-                {
-                    SetTitle(value);
-                });
+                title.Subscribe(new AnonymousObserver<string>(SetTitle));
 
                 var wState = pw.GetObservable(Window.WindowStateProperty);
-                wState.Subscribe(s =>
+                wState.Subscribe(new AnonymousObserver<WindowState>(s =>
                 {
                     var btn = this.FindControl<Button>("MaximizeBtn");
                     if (s == WindowState.Maximized) {
@@ -65,7 +63,7 @@ namespace SingleWindow.Controls
                         pw.Padding = new Thickness(0);
                         btn.Content = new Projektanker.Icons.Avalonia.Icon() { Value = "fas fa-window-maximize" };
                     }
-                });
+                }));
             }
 
             var btn = this.FindControl<Button>("MinimizeBtn");
