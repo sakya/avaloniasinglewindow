@@ -9,7 +9,7 @@ namespace SingleWindow.Controls
 {
     public partial class TitleBar : UserControl
     {
-        bool _canGoBack;
+        private bool _canGoBack;
 
         public TitleBar()
         {
