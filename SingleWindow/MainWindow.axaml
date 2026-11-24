@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:SingleWindow.Controls"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="350"
-        Width="600" Height="350"
+        Width="600" Height="380"
         MinWidth="300" MinHeight="300"
         WindowStartupLocation="CenterScreen"
         x:Class="SingleWindow.MainWindow">

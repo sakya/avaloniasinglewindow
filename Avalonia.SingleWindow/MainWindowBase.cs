@@ -197,6 +197,8 @@ namespace Avalonia.SingleWindow
             PageChanging();
             _changingPage = true;
             entering.Opacity = 0;
+            // Slide transitions translate pages outside the container: clip them
+            Container.ClipToBounds = true;
             Container.Children.Add(entering);
             if (exiting == null) {
                 entering.Opacity = 1;

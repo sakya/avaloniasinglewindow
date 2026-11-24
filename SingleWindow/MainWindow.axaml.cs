@@ -1,4 +1,3 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
@@ -15,9 +14,6 @@ namespace SingleWindow
         public MainWindow()
         {
             InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
-#endif
         }
 
         private void InitializeComponent()
@@ -27,8 +23,7 @@ namespace SingleWindow
             if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
                 ExtendClientAreaToDecorationsHint = true;
                 ExtendClientAreaTitleBarHeightHint = -1;
-                ExtendClientAreaChromeHints = Avalonia.Platform.ExtendClientAreaChromeHints.NoChrome;
-                //TransparencyLevelHint = WindowTransparencyLevel.AcrylicBlur;
+                WindowDecorations = WindowDecorations.BorderOnly;
                 Background = new SolidColorBrush(Colors.Transparent);
             }
 

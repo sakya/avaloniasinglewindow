@@ -2,12 +2,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:i="clr-namespace:Projektanker.Icons.Avalonia;assembly=Projektanker.Icons.Avalonia"
+             xmlns:mi="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="SingleWindow.Controls.TitleBar">
 
   <StackPanel>
-    <Grid>
+    <Grid Background="Transparent" WindowDecorationProperties.ElementRole="TitleBar">
       <DockPanel IsHitTestVisible="False"></DockPanel>
 
       <DockPanel>
@@ -15,7 +15,7 @@
                     DockPanel.Dock="Left"
                     Height="30">
 
-          <Button Name="BackBtn" Height="30" Width="30" Margin="0" Padding="5" IsVisible="False">
+          <Button Name="BackBtn" WindowDecorationProperties.ElementRole="User" Height="30" Width="30" Margin="0" Padding="5" IsVisible="False">
             <Button.Styles>
               <Style Selector="Button /template/ ContentPresenter">
                 <Setter Property="CornerRadius" Value="0" />
@@ -24,7 +24,7 @@
                 <Setter Property="Background" Value="Transparent"/>
               </Style>
             </Button.Styles>
-            <i:Icon Value="fas fa-arrow-left" />
+            <mi:MaterialIcon Kind="ArrowLeft" />
           </Button>
 
           <Image Name="Icon"
@@ -42,7 +42,7 @@
 
         <StackPanel HorizontalAlignment="Right"
                     Orientation="Horizontal">
-          <Button Name="MinimizeBtn" Height="30" Width="46" Padding="0">
+          <Button Name="MinimizeBtn" WindowDecorationProperties.ElementRole="User" Height="30" Width="46" Padding="0">
             <Button.Styles>
               <Style Selector="Button /template/ ContentPresenter">
                 <Setter Property="CornerRadius" Value="0" />
@@ -51,10 +51,10 @@
                 <Setter Property="Background" Value="Transparent"/>
               </Style>
             </Button.Styles>
-            <i:Icon Value="fas fa-window-minimize" />
+            <mi:MaterialIcon Kind="WindowMinimize" />
           </Button>
 
-          <Button Name="MaximizeBtn" Height="30" Width="46" Padding="0">
+          <Button Name="MaximizeBtn" WindowDecorationProperties.ElementRole="User" Height="30" Width="46" Padding="0">
             <Button.Styles>
               <Style Selector="Button /template/ ContentPresenter">
                 <Setter Property="CornerRadius" Value="0" />
@@ -63,10 +63,10 @@
                 <Setter Property="Background" Value="Transparent"/>
               </Style>
             </Button.Styles>
-            <i:Icon Value="fas fa-window-maximize" />
+            <mi:MaterialIcon Name="MaximizeIcon" Kind="WindowMaximize" />
           </Button>
 
-          <Button Name="CloseBtn" Height="30" Width="46" Padding="0">
+          <Button Name="CloseBtn" WindowDecorationProperties.ElementRole="User" Height="30" Width="46" Padding="0">
             <Button.Styles>
               <Style Selector="Button /template/ ContentPresenter">
                 <Setter Property="CornerRadius" Value="0" />
@@ -78,7 +78,7 @@
                 <Setter Property="Background" Value="Transparent"/>
               </Style>
             </Button.Styles>
-            <i:Icon Value="fas fa-times" />
+            <mi:MaterialIcon Kind="WindowClose" />
           </Button>
         </StackPanel>
       </DockPanel>

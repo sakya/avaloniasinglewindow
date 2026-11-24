@@ -2,6 +2,8 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Markup.Xaml;
+using Material.Icons;
+using Material.Icons.Avalonia;
 using System;
 using Avalonia.Reactive;
 
@@ -46,7 +48,7 @@ namespace SingleWindow.Controls
         {
             base.OnApplyTemplate(e);
 
-            var pw = (Window)this.VisualRoot;
+            var pw = (Window)TopLevel.GetTopLevel(this);
             if (pw != null) {
                 SetTitle(pw.Title);
                 var title = pw.GetObservable(Window.TitleProperty);
@@ -58,13 +60,13 @@ namespace SingleWindow.Controls
                 var wState = pw.GetObservable(Window.WindowStateProperty);
                 wState.Subscribe(new AnonymousObserver<WindowState>(s =>
                 {
-                    var btn = this.FindControl<Button>("MaximizeBtn");
+                    var icon = this.FindControl<MaterialIcon>("MaximizeIcon");
                     if (s == WindowState.Maximized) {
                         pw.Padding = new Thickness(5);
-                        btn.Content = new Projektanker.Icons.Avalonia.Icon() { Value = "fas fa-window-restore" };
+                        icon.Kind = MaterialIconKind.WindowRestore;
                     } else {
                         pw.Padding = new Thickness(0);
-                        btn.Content = new Projektanker.Icons.Avalonia.Icon() { Value = "fas fa-window-maximize" };
+                        icon.Kind = MaterialIconKind.WindowMaximize;
                     }
                 }));
             }
@@ -72,14 +74,14 @@ namespace SingleWindow.Controls
             var btn = this.FindControl<Button>("MinimizeBtn");
             btn.Click += (e, a) =>
             {
-                ((Window)this.VisualRoot).WindowState = WindowState.Minimized;
+                ((Window)TopLevel.GetTopLevel(this)).WindowState = WindowState.Minimized;
             };
             btn.IsVisible = CanMinimize;
 
             btn = this.FindControl<Button>("MaximizeBtn");
             btn.Click += (s, a) =>
             {
-                var vr = (Window)this.VisualRoot;
+                var vr = (Window)TopLevel.GetTopLevel(this);
                 if (vr.WindowState == WindowState.Maximized)
                     vr.WindowState = WindowState.Normal;
                 else
@@ -90,7 +92,7 @@ namespace SingleWindow.Controls
             btn = this.FindControl<Button>("CloseBtn");
             btn.Click += (s, a) =>
             {
-                ((Window)this.VisualRoot).Close();
+                ((Window)TopLevel.GetTopLevel(this)).Close();
             };
 
             btn = this.FindControl<Button>("BackBtn");
